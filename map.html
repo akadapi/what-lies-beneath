@@ -4,252 +4,176 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Map — What Lies Beneath</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    #map-el { height: 560px; border-radius: 12px; border: 1px solid rgba(100,160,220,0.15); overflow: hidden; }
+  </style>
 </head>
 <body>
 
-  <nav id="navbar">
-    <div id="nav-logo">WHAT LIES BENEATH</div>
-    <div id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="map.html" class="active">The Map</a>
-      <a href="cost.html">The Cost</a>
-      <a href="corporations.html">Who's Doing It</a>
-      <a href="action.html">Take Action</a>
-    </div>
-  </nav>
-
-  <div class="page-hero">
-    <div class="section-tag">INTERACTIVE MAP</div>
-    <h1>Where is mining happening?</h1>
-    <p>The International Seabed Authority has issued 31 exploration contracts across three ocean basins. Hover or click any zone to learn who holds the contract and what they're targeting.</p>
+<nav id="navbar">
+  <div id="nav-logo">What Lies Beneath</div>
+  <div id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="map.html" class="active">The Map</a>
+    <a href="cost.html">The Cost</a>
+    <a href="corporations.html">Who's Doing It</a>
+    <a href="action.html">Take Action</a>
   </div>
+</nav>
 
-  <section class="section">
-    <div class="section-inner">
+<div class="page-hero">
+  <div class="inner">
+    <div class="section-tag">Interactive Map</div>
+    <h1>Where is mining happening?</h1>
+    <p>The ISA has issued 31 exploration contracts across three ocean basins. Click any marker to learn who holds the contract, what they're mining, and the latest status.</p>
+  </div>
+</div>
 
-      <div id="map-container">
-        <svg id="map-svg" viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg">
-          <!-- Ocean background -->
-          <rect width="900" height="440" fill="#020d1a"/>
+<section class="section">
+  <div class="inner">
 
-          <!-- Very simplified world landmasses -->
-          <!-- North America -->
-          <path d="M 120 40 L 180 35 L 220 50 L 230 80 L 210 110 L 190 150 L 170 180 L 150 200 L 130 210 L 110 200 L 100 170 L 90 140 L 95 100 L 110 70 Z" fill="#0d2a1a" opacity="0.8"/>
-          <!-- South America -->
-          <path d="M 165 210 L 195 205 L 210 230 L 215 270 L 205 310 L 190 340 L 175 360 L 160 350 L 150 320 L 148 280 L 155 250 Z" fill="#0d2a1a" opacity="0.8"/>
-          <!-- Europe -->
-          <path d="M 420 40 L 460 35 L 475 50 L 470 70 L 450 80 L 430 75 L 415 60 Z" fill="#0d2a1a" opacity="0.8"/>
-          <!-- Africa -->
-          <path d="M 430 85 L 470 80 L 490 110 L 495 160 L 490 210 L 475 260 L 460 290 L 445 280 L 430 250 L 420 200 L 415 150 L 420 110 Z" fill="#0d2a1a" opacity="0.8"/>
-          <!-- Asia -->
-          <path d="M 490 35 L 620 30 L 680 50 L 700 80 L 690 110 L 660 120 L 620 115 L 580 100 L 540 90 L 500 80 L 480 60 Z" fill="#0d2a1a" opacity="0.8"/>
-          <!-- Australia -->
-          <path d="M 680 240 L 730 230 L 760 250 L 765 290 L 750 310 L 720 315 L 695 300 L 678 275 Z" fill="#0d2a1a" opacity="0.8"/>
+    <div id="map-el"></div>
 
-          <!-- CCZ Region highlight -->
-          <rect x="155" y="155" width="220" height="80" rx="4" fill="rgba(58,154,238,0.06)" stroke="rgba(58,154,238,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
-          <text x="265" y="150" text-anchor="middle" fill="rgba(58,154,238,0.5)" font-size="9" font-family="monospace">CLARION-CLIPPERTON ZONE (CCZ)</text>
-
-          <!-- Mid-Atlantic Ridge -->
-          <line x1="340" y1="60" x2="360" y2="360" stroke="rgba(238,106,42,0.2)" stroke-width="2" stroke-dasharray="6 4"/>
-          <text x="345" y="200" fill="rgba(238,106,42,0.4)" font-size="7" font-family="monospace" transform="rotate(-85,345,200)">MID-ATLANTIC RIDGE</text>
-
-          <!-- Indian Ocean Ridge -->
-          <line x1="560" y1="200" x2="600" y2="380" stroke="rgba(238,106,42,0.2)" stroke-width="2" stroke-dasharray="6 4"/>
-
-          <!-- MINING ZONE DOTS — CCZ (Pacific) -->
-          <!-- 17 contracts in CCZ -->
-          <circle class="zone-dot" cx="175" cy="183" r="8" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="NORI Area D (The Metals Company / Nauru)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="Active exploration — TMC applied to NOAA for commercial license, April 2025"/>
-          <circle class="zone-dot" cx="195" cy="190" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="TOML (Tonga Offshore Mining Ltd / Tonga)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="Active exploration — Kiribati terminated contract with TMC in January 2025"/>
-          <circle class="zone-dot" cx="215" cy="178" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="GSR (Global Sea Mineral Resources / Belgium)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="Conducted Patania II test collection in 2021. China Minmetals approved for trial in 2025."/>
-          <circle class="zone-dot" cx="235" cy="185" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="China Ocean Mineral Resources (COMRA)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="China holds 2 exploration contracts in CCZ. Trial planned for 2025."/>
-          <circle class="zone-dot" cx="253" cy="175" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="China Minmetals Corporation" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="ISA approved trial in May 2025. Second Chinese company in CCZ."/>
-          <circle class="zone-dot" cx="270" cy="183" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="IOM (Interoceanmetal Joint Organization)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="Sponsored by Bulgaria, Cuba, Czech Republic, Poland, Russia, Slovakia."/>
-          <circle class="zone-dot" cx="285" cy="172" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="JOGMEC (Japan Oil, Gas and Metals National Corp)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="State-backed Japanese exploration contractor."/>
-          <circle class="zone-dot" cx="300" cy="180" r="7" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="KORDI (Korea Institute of Ocean Science)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="South Korean state-backed ISA exploration contractor."/>
-          <circle class="zone-dot" cx="318" cy="173" r="6" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="BGR (Germany / Federal Institute for Geosciences)" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="Germany holds an ISA contract while simultaneously calling for a moratorium on mining."/>
-          <circle class="zone-dot" cx="334" cy="181" r="6" fill="rgba(200,168,74,0.7)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="IFREMER / France" data-type="Polymetallic Nodules" data-location="Clarion-Clipperton Zone, Pacific" data-status="French state agency contract in CCZ."/>
-
-          <!-- Indian Ocean Basin -->
-          <circle class="zone-dot" cx="580" cy="260" r="8" fill="rgba(200,168,74,0.8)" stroke="#c8a84a" stroke-width="1.5"
-            data-name="IOSCL (India)" data-type="Polymetallic Nodules" data-location="Central Indian Ocean Basin" data-status="India holds one of only two nodule contracts outside the CCZ. Located in Central Indian Ocean Basin."/>
-
-          <!-- Mid-Atlantic Ridge — sulphides -->
-          <circle class="zone-dot" cx="348" cy="130" r="7" fill="rgba(238,74,42,0.8)" stroke="#ee4a2a" stroke-width="1.5"
-            data-name="Russia (PMGB)" data-type="Polymetallic Sulphides" data-location="Mid-Atlantic Ridge" data-status="Russia holds 2 contracts on the Mid-Atlantic Ridge for polymetallic sulphides."/>
-          <circle class="zone-dot" cx="355" cy="175" r="7" fill="rgba(238,74,42,0.8)" stroke="#ee4a2a" stroke-width="1.5"
-            data-name="China (COMRA) — Atlantic" data-type="Polymetallic Sulphides" data-location="Mid-Atlantic Ridge" data-status="China also holds a sulphide contract on the Mid-Atlantic Ridge."/>
-          <circle class="zone-dot" cx="350" cy="230" r="6" fill="rgba(238,74,42,0.8)" stroke="#ee4a2a" stroke-width="1.5"
-            data-name="France (IFREMER) — Indian Ridge" data-type="Polymetallic Sulphides" data-location="Central Indian Ridge" data-status="French sulphide exploration on the Indian Ocean ridge system."/>
-
-          <!-- Western Pacific — cobalt crusts -->
-          <circle class="zone-dot" cx="700" cy="175" r="8" fill="rgba(90,200,221,0.8)" stroke="#5ac8dd" stroke-width="1.5"
-            data-name="China (COMRA) — Pacific Crusts" data-type="Cobalt-Rich Crusts" data-location="Western Pacific Ocean" data-status="One of five cobalt-rich crust contracts in the Western Pacific. China deployed Kaituo II mining vehicle here in June 2024."/>
-          <circle class="zone-dot" cx="718" cy="190" r="7" fill="rgba(90,200,221,0.8)" stroke="#5ac8dd" stroke-width="1.5"
-            data-name="Japan (JOGMEC) — Pacific Crusts" data-type="Cobalt-Rich Crusts" data-location="Western Pacific Ocean" data-status="Japan holds cobalt-rich crust contracts in the Western Pacific."/>
-          <circle class="zone-dot" cx="695" cy="200" r="6" fill="rgba(90,200,221,0.8)" stroke="#5ac8dd" stroke-width="1.5"
-            data-name="Russia — Pacific Crusts" data-type="Cobalt-Rich Crusts" data-location="Western Pacific Ocean" data-status="Russia holds cobalt crust contracts in the Western Pacific."/>
-
-          <!-- Lockheed Martin / US licenses -->
-          <circle class="zone-dot" cx="178" cy="168" r="6" fill="rgba(255,200,50,0.6)" stroke="#ffcc32" stroke-width="1.5" stroke-dasharray="3 2"
-            data-name="Lockheed Martin (USA-1 &amp; USA-4)" data-type="US License (NOAA)" data-location="Clarion-Clipperton Zone, Pacific" data-status="Two US licenses issued in 1984 by NOAA. Lockheed Martin has shown little interest. NOAA reviewing new 2025 applications that overlap with these areas."/>
-        </svg>
-        <div id="map-tooltip"></div>
-      </div>
-
-      <div id="map-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#c8a84a"></div>Polymetallic Nodules</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#ee4a2a"></div>Polymetallic Sulphides</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#5ac8dd"></div>Cobalt-Rich Crusts</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#ffcc32;border:1px dashed #ffcc32"></div>US NOAA License</div>
-      </div>
-
-      <div class="source-note">
-        Sources: International Seabed Authority (isa.org.jm) — Exploration Contracts, updated March 2025 · 
-        CSIS Asia Maritime Transparency Initiative, May 2025 · 
-        Congress.gov CRS Report IG10053, updated February 2026 · NOAA
-      </div>
-
-      <!-- Zone list -->
-      <div style="margin-top:48px">
-        <h2 style="font-size:22px;color:#fff;margin-bottom:8px">All active ISA exploration contracts</h2>
-        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">31 contracts across the Pacific, Atlantic, and Indian Oceans. Source: ISA, isa.org.jm</p>
-        <div class="zone-list">
-          <div class="zone-card">
-            <div class="zone-card-name">NORI — Nauru Ocean Resources Inc.</div>
-            <div class="zone-card-sponsor">Sponsored by: Nauru (The Metals Company)</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">TOML — Tonga Offshore Mining Ltd.</div>
-            <div class="zone-card-sponsor">Sponsored by: Tonga (The Metals Company)</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">GSR — Global Sea Mineral Resources</div>
-            <div class="zone-card-sponsor">Sponsored by: Belgium</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">COMRA — China Ocean Mineral Resources</div>
-            <div class="zone-card-sponsor">Sponsored by: China</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">China Minmetals Corporation</div>
-            <div class="zone-card-sponsor">Sponsored by: China</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">IOM — Interoceanmetal Joint Organization</div>
-            <div class="zone-card-sponsor">Bulgaria, Cuba, Czech Republic, Poland, Russia, Slovakia</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">JOGMEC — Japan Oil, Gas and Metals</div>
-            <div class="zone-card-sponsor">Sponsored by: Japan</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">KORDI — Korea Institute of Ocean Science</div>
-            <div class="zone-card-sponsor">Sponsored by: South Korea</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">BGR — Federal Institute for Geosciences</div>
-            <div class="zone-card-sponsor">Sponsored by: Germany</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">IFREMER</div>
-            <div class="zone-card-sponsor">Sponsored by: France</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · CCZ</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">IOSCL — India</div>
-            <div class="zone-card-sponsor">Sponsored by: India</div>
-            <span class="zone-card-tag tag-nodule">POLYMETALLIC NODULES · INDIAN OCEAN</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">Russia (PMGB) — Atlantic &amp; Indian Ridges</div>
-            <div class="zone-card-sponsor">Sponsored by: Russia</div>
-            <span class="zone-card-tag tag-sulphide">POLYMETALLIC SULPHIDES</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">China (COMRA) — Mid-Atlantic Ridge</div>
-            <div class="zone-card-sponsor">Sponsored by: China</div>
-            <span class="zone-card-tag tag-sulphide">POLYMETALLIC SULPHIDES</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">China (COMRA) — Western Pacific Crusts</div>
-            <div class="zone-card-sponsor">Sponsored by: China</div>
-            <span class="zone-card-tag tag-crust">COBALT-RICH CRUSTS · W. PACIFIC</span>
-          </div>
-          <div class="zone-card">
-            <div class="zone-card-name">Japan (JOGMEC) — Western Pacific Crusts</div>
-            <div class="zone-card-sponsor">Sponsored by: Japan</div>
-            <span class="zone-card-tag tag-crust">COBALT-RICH CRUSTS · W. PACIFIC</span>
-          </div>
-        </div>
-      </div>
-
+    <div class="map-legend">
+      <div class="leg"><div class="legdot" style="background:#c8a84a"></div>Polymetallic Nodules</div>
+      <div class="leg"><div class="legdot" style="background:#f97316"></div>Polymetallic Sulphides</div>
+      <div class="leg"><div class="legdot" style="background:#4facde"></div>Cobalt-Rich Crusts</div>
+      <div class="leg"><div class="legdot" style="background:#a78bfa"></div>US NOAA License</div>
     </div>
-  </section>
 
-  <footer>
-    <div class="footer-inner">
-      <div><strong>WHAT LIES BENEATH</strong> — A deep sea mining awareness project</div>
-      <div class="footer-sources">
-        Data sources: International Seabed Authority (isa.org.jm) · CSIS Asia Maritime Transparency Initiative, May 2025 · Congress.gov CRS Report IG10053, Feb 2026 · NOAA
+    <div class="src-note">
+      Sources: International Seabed Authority (isa.org.jm), updated March 2025 ·
+      CSIS Asia Maritime Transparency Initiative, May 2025 ·
+      Congress.gov CRS Report IG10053, Feb 2026 · NOAA
+      <br>Map tiles © <a href="https://www.openstreetmap.org/copyright" target="_blank" style="color:var(--accent)">OpenStreetMap contributors</a>
+    </div>
+
+    <!-- Zone list -->
+    <div style="margin-top:56px">
+      <div class="section-tag">All Active Contracts</div>
+      <h2 style="margin-bottom:8px">31 ISA exploration contracts</h2>
+      <p style="margin-bottom:28px">Across the Pacific, Atlantic, and Indian Oceans. Source: ISA, isa.org.jm</p>
+      <div class="zone-grid">
+        <div class="zone-card"><div class="zone-name">NORI — Nauru Ocean Resources Inc.</div><div class="zone-sponsor">Sponsored by Nauru (The Metals Company)</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">TOML — Tonga Offshore Mining Ltd.</div><div class="zone-sponsor">Sponsored by Tonga (The Metals Company)</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">GSR — Global Sea Mineral Resources</div><div class="zone-sponsor">Sponsored by Belgium</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">COMRA — China Ocean Mineral Resources</div><div class="zone-sponsor">Sponsored by China</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">China Minmetals Corporation</div><div class="zone-sponsor">Sponsored by China — ISA approved 2025 trial</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">IOM — Interoceanmetal Joint Org.</div><div class="zone-sponsor">Bulgaria, Cuba, Czech Republic, Poland, Russia, Slovakia</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">JOGMEC — Japan Oil, Gas and Metals</div><div class="zone-sponsor">Sponsored by Japan</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">KORDI — Korea Institute of Ocean Science</div><div class="zone-sponsor">Sponsored by South Korea</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">BGR — Federal Institute for Geosciences</div><div class="zone-sponsor">Sponsored by Germany (also calls for a moratorium)</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">IFREMER</div><div class="zone-sponsor">Sponsored by France (also calls for a moratorium)</div><span class="zone-tag tag-nod">NODULES · CCZ</span></div>
+        <div class="zone-card"><div class="zone-name">IOSCL — India</div><div class="zone-sponsor">Sponsored by India</div><span class="zone-tag tag-nod">NODULES · INDIAN OCEAN</span></div>
+        <div class="zone-card"><div class="zone-name">Russia (PMGB) — Atlantic Ridge</div><div class="zone-sponsor">Sponsored by Russia (2 ridge contracts)</div><span class="zone-tag tag-sul">SULPHIDES · MID-ATLANTIC RIDGE</span></div>
+        <div class="zone-card"><div class="zone-name">China (COMRA) — Atlantic</div><div class="zone-sponsor">Sponsored by China</div><span class="zone-tag tag-sul">SULPHIDES · MID-ATLANTIC RIDGE</span></div>
+        <div class="zone-card"><div class="zone-name">China (COMRA) — Pacific Crusts</div><div class="zone-sponsor">Deployed Kaituo II vehicle, 2024</div><span class="zone-tag tag-cru">COBALT CRUSTS · W. PACIFIC</span></div>
+        <div class="zone-card"><div class="zone-name">Japan (JOGMEC) — Pacific Crusts</div><div class="zone-sponsor">Sponsored by Japan</div><span class="zone-tag tag-cru">COBALT CRUSTS · W. PACIFIC</span></div>
       </div>
     </div>
-  </footer>
 
-  <script>
-    const dots = document.querySelectorAll('.zone-dot');
-    const tooltip = document.getElementById('map-tooltip');
-    const container = document.getElementById('map-container');
+  </div>
+</section>
 
-    dots.forEach(dot => {
-      dot.addEventListener('mouseenter', function(e) {
-        const rect = container.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+<footer>
+  <div class="footer-in">
+    <div>What Lies Beneath — A deep sea mining awareness project</div>
+    <div class="footer-srcs">
+      Data sources: ISA (isa.org.jm) · CSIS Asia Maritime Transparency Initiative, May 2025 · Congress.gov CRS Report IG10053, Feb 2026 · NOAA ·
+      Map tiles © OpenStreetMap contributors
+    </div>
+  </div>
+</footer>
 
-        tooltip.innerHTML = `
-          <strong>${this.dataset.name}</strong>
-          <div><span style="color:var(--text-muted)">Type:</span> ${this.dataset.type}</div>
-          <div><span style="color:var(--text-muted)">Location:</span> ${this.dataset.location}</div>
-          <div style="margin-top:6px;color:#b0d4ee">${this.dataset.status}</div>
-          <div class="tt-source">Source: ISA / CSIS AMTI</div>
-        `;
-        tooltip.style.display = 'block';
-        tooltip.style.left = (x + 12) + 'px';
-        tooltip.style.top  = (y - 10) + 'px';
-      });
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Initialize Leaflet map centered on the Pacific
+  var map = L.map('map-el', {
+    center: [10, -160],
+    zoom: 2,
+    minZoom: 2,
+    maxZoom: 8,
+  });
 
-      dot.addEventListener('mousemove', function(e) {
-        const rect = container.getBoundingClientRect();
-        tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
-        tooltip.style.top  = (e.clientY - rect.top - 10) + 'px';
-      });
+  // Dark OpenStreetMap tile layer (CartoDB dark matter — free, no API key)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
 
-      dot.addEventListener('mouseleave', function() {
-        tooltip.style.display = 'none';
-      });
-    });
-  </script>
+  // Helper to create circle markers
+  function makeMarker(lat, lng, color, name, type, location, status, source) {
+    return L.circleMarker([lat, lng], {
+      radius: 9,
+      fillColor: color,
+      color: color,
+      weight: 2,
+      opacity: 0.9,
+      fillOpacity: 0.65,
+    }).bindPopup(
+      '<div class="pop-type">' + type + '</div>' +
+      '<b>' + name + '</b><br>' +
+      '<span style="color:#7a9db8">' + location + '</span><br><br>' +
+      status +
+      '<div class="pop-src">' + source + '</div>'
+    );
+  }
+
+  // ── POLYMETALLIC NODULES — CCZ (Pacific) ──
+  var noduleColor = '#c8a84a';
+  var zones = [
+    makeMarker(10, -153, noduleColor, 'NORI — Nauru Ocean Resources Inc. (The Metals Company)', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'Applied to NOAA for commercial mining license, April 2025. One week after Trump EO.', 'Source: CSIS AMTI, May 2025'),
+    makeMarker(11, -148, noduleColor, 'TOML — Tonga Offshore Mining Ltd. (The Metals Company)', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'Kiribati terminated contract with TMC in January 2025. TOML contract still active.', 'Source: ISA / CSIS AMTI'),
+    makeMarker(9, -143, noduleColor, 'GSR — Global Sea Mineral Resources (Belgium)', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'Conducted Patania II test in 2021. Sediment plume extended beyond the mining zone.', 'Source: Frontiers in Marine Science, 2024'),
+    makeMarker(12, -138, noduleColor, 'China Ocean Mineral Resources (COMRA)', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'China holds more ISA contracts than any other nation. Trial planned 2025.', 'Source: CSIS AMTI, May 2025'),
+    makeMarker(10, -133, noduleColor, 'China Minmetals Corporation', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'ISA approved Minmetals to conduct mining trial in CCZ in 2025.', 'Source: CSIS AMTI, May 2025'),
+    makeMarker(8, -128, noduleColor, 'IOM — Interoceanmetal Joint Organization', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'Consortium of Bulgaria, Cuba, Czech Republic, Poland, Russia, Slovakia.', 'Source: ISA, isa.org.jm'),
+    makeMarker(13, -123, noduleColor, 'JOGMEC — Japan Oil, Gas and Metals', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'State-backed Japanese contractor. Also holds Western Pacific cobalt crust contract.', 'Source: ISA / CSIS AMTI'),
+    makeMarker(9, -118, noduleColor, 'KORDI — Korea Institute of Ocean Science', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'South Korean state-backed ISA exploration contractor.', 'Source: ISA, isa.org.jm'),
+    makeMarker(11, -113, noduleColor, 'BGR — Federal Institute for Geosciences (Germany)', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'Germany holds an ISA contract while also calling for a mining moratorium.', 'Source: ISA / CSIS AMTI'),
+    makeMarker(10, -108, noduleColor, 'IFREMER (France)', 'POLYMETALLIC NODULES', 'Clarion-Clipperton Zone, Pacific', 'France holds an ISA contract while also calling for a mining moratorium.', 'Source: ISA, isa.org.jm'),
+  ];
+
+  // Indian Ocean nodules
+  zones.push(makeMarker(10, 76, noduleColor, 'IOSCL — India', 'POLYMETALLIC NODULES', 'Central Indian Ocean Basin', 'One of only two nodule contracts outside the CCZ.', 'Source: ISA, isa.org.jm'));
+
+  // Mid-Atlantic Ridge sulphides
+  var sulphideColor = '#f97316';
+  zones.push(makeMarker(26, -45, sulphideColor, 'Russia (PMGB) — North Atlantic', 'POLYMETALLIC SULPHIDES', 'Mid-Atlantic Ridge', 'Russia holds 2 contracts on the Mid-Atlantic Ridge for polymetallic sulphides.', 'Source: ISA, isa.org.jm'));
+  zones.push(makeMarker(-2, -12, sulphideColor, 'Russia (PMGB) — South Atlantic', 'POLYMETALLIC SULPHIDES', 'Mid-Atlantic Ridge', 'Second Russian sulphide contract on the Mid-Atlantic Ridge.', 'Source: ISA, isa.org.jm'));
+  zones.push(makeMarker(5, -33, sulphideColor, 'China (COMRA) — Mid-Atlantic Ridge', 'POLYMETALLIC SULPHIDES', 'Mid-Atlantic Ridge', 'China also holds a sulphide exploration contract on the Mid-Atlantic Ridge.', 'Source: ISA, isa.org.jm'));
+  zones.push(makeMarker(-22, 66, sulphideColor, 'France (IFREMER) — Indian Ridge', 'POLYMETALLIC SULPHIDES', 'Central Indian Ridge', 'French sulphide exploration on the Indian Ocean ridge system.', 'Source: ISA, isa.org.jm'));
+
+  // Western Pacific cobalt crusts
+  var crustColor = '#4facde';
+  zones.push(makeMarker(16, 152, crustColor, 'China (COMRA) — Pacific Crusts', 'COBALT-RICH CRUSTS', 'Western Pacific Ocean', 'Deployed Kaituo II mining vehicle at 4,000m depth in June 2024. China holds the most Pacific crust contracts.', 'Source: CSIS AMTI, May 2025'));
+  zones.push(makeMarker(19, 157, crustColor, 'Japan (JOGMEC) — Pacific Crusts', 'COBALT-RICH CRUSTS', 'Western Pacific Ocean', 'Japan holds cobalt-rich crust contracts in the Western Pacific.', 'Source: ISA, isa.org.jm'));
+  zones.push(makeMarker(14, 147, crustColor, 'Russia — Pacific Crusts', 'COBALT-RICH CRUSTS', 'Western Pacific Ocean', 'Russia holds cobalt crust exploration contracts in the Western Pacific.', 'Source: ISA, isa.org.jm'));
+
+  // US NOAA licenses
+  var usColor = '#a78bfa';
+  zones.push(makeMarker(13.5, -151, usColor, 'Lockheed Martin (USA-1 & USA-4)', 'US NOAA LICENSE', 'Clarion-Clipperton Zone, Pacific', 'Two US licenses issued by NOAA in 1984. ISA designated part of USA-1 as a protected area in 2021 — the US does not recognize this.', 'Source: Congress.gov CRS Report IG10053, Feb 2026'));
+
+  // Add all to map
+  zones.forEach(function(z) { z.addTo(map); });
+
+  // CCZ highlight box
+  var ccz = L.polygon([
+    [23, -156], [23, -100],
+    [-2, -100], [-2, -156]
+  ], {
+    color: 'rgba(79,172,222,0.5)',
+    weight: 1.5,
+    fill: true,
+    fillColor: 'rgba(79,172,222,0.04)',
+    dashArray: '6,4',
+  }).addTo(map);
+  ccz.bindTooltip('Clarion-Clipperton Zone (CCZ) — 17 contracts', {permanent: false, direction: 'top'});
+</script>
+
 </body>
 </html>
