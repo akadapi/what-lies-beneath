@@ -4,243 +4,181 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Take Action — What Lies Beneath</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <nav id="navbar">
-    <div id="nav-logo">WHAT LIES BENEATH</div>
-    <div id="nav-links">
-      <a href="index.html">Home</a>
-      <a href="map.html">The Map</a>
-      <a href="cost.html">The Cost</a>
-      <a href="corporations.html">Who's Doing It</a>
-      <a href="action.html" class="active">Take Action</a>
-    </div>
-  </nav>
-
-  <div class="page-hero">
-    <div class="section-tag">TAKE ACTION</div>
-    <h1>You know what's happening. Now what?</h1>
-    <p>Information without action doesn't change anything. Here are concrete things you can do — from sharing this site to contacting decision-makers directly.</p>
+<nav id="navbar">
+  <div id="nav-logo">What Lies Beneath</div>
+  <div id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="map.html">The Map</a>
+    <a href="cost.html">The Cost</a>
+    <a href="corporations.html">Who's Doing It</a>
+    <a href="action.html" class="active">Take Action</a>
   </div>
+</nav>
 
-  <section class="section">
-    <div class="section-inner">
+<div class="page-hero">
+  <div class="inner">
+    <div class="section-tag">Take Action</div>
+    <h1>You know what's happening. Now what?</h1>
+    <p>Information without action doesn't change anything. Here are concrete things you can do today.</p>
+  </div>
+</div>
 
-      <div class="action-grid">
-
-        <div class="action-card">
-          <div class="action-icon">📢</div>
-          <div class="action-title">Share this site</div>
-          <div class="action-desc">The most powerful thing you can do right now is make sure other people know this is happening. Most people your age have never heard of deep sea mining. Send this site to someone who hasn't.</div>
-          <div style="margin-top:auto">
-            <button class="btn-primary" onclick="copyLink()" style="font-size:12px;padding:9px 18px">COPY SITE LINK</button>
-            <span id="copy-confirm" style="font-size:12px;color:var(--green);margin-left:10px;display:none">Copied!</span>
-          </div>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">✍️</div>
-          <div class="action-title">Sign the moratorium petition</div>
-          <div class="action-desc">The Deep Sea Conservation Coalition is pushing for a global moratorium on commercial deep sea mining. Their petition has collected hundreds of thousands of signatures from scientists, citizens, and organizations worldwide.</div>
-          <a href="https://www.savethehighseas.org" target="_blank">→ savethehighseas.org</a>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">🏛️</div>
-          <div class="action-title">Contact your representatives</div>
-          <div class="action-desc">The US is not a member of UNCLOS but is still issuing its own deep sea mining licenses through NOAA. Your representatives in Congress can influence these decisions. Ask them where they stand.</div>
-          <a href="https://www.congress.gov/members/find-your-member" target="_blank">→ Find your representative</a>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">🔬</div>
-          <div class="action-title">Learn from the scientists</div>
-          <div class="action-desc">The Deep-Ocean Stewardship Initiative (DOSI) is a network of scientists, economists, and legal experts providing independent research on deep sea mining impacts. Read their actual findings, not corporate summaries.</div>
-          <a href="https://www.dosi-project.org" target="_blank">→ dosi-project.org</a>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">📰</div>
-          <div class="action-title">Follow the story</div>
-          <div class="action-desc">This is a fast-moving issue. Trump's April 2025 executive order changed the landscape significantly. Organizations tracking this in real time include the Deep Sea Conservation Coalition and CSIS Asia Maritime Transparency Initiative.</div>
-          <a href="https://www.deepseaminingoutourdepth.org" target="_blank">→ deepseaminingoutourdepth.org</a>
-        </div>
-
-        <div class="action-card">
-          <div class="action-icon">🌊</div>
-          <div class="action-title">Support ocean protection orgs</div>
-          <div class="action-desc">Organizations actively fighting deep sea mining and ocean protection include Oceans North, the Deep Sea Conservation Coalition, and Avaaz — which has coordinated large-scale public campaigns on this issue.</div>
-          <a href="https://www.oceansnorth.org" target="_blank">→ oceansnorth.org</a>
-        </div>
-
-      </div>
-
-      <!-- Quiz -->
-      <div style="margin-top:64px">
-        <div class="section-tag">TEST YOUR KNOWLEDGE</div>
-        <h2 style="margin-bottom:8px">How much do you know about deep sea mining?</h2>
-        <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">5 questions. All answers based on real data cited on this site.</p>
-
-        <div id="quiz-wrap">
-          <div id="quiz-q" class="quiz-q"></div>
-          <div id="quiz-opts" class="quiz-opts"></div>
-          <div id="quiz-feedback" class="quiz-feedback"></div>
-          <button id="quiz-next" onclick="nextQuestion()">NEXT QUESTION →</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="section dark-section">
-    <div class="section-inner">
-      <div class="section-tag">THE BIGGER PICTURE</div>
-      <h2>Why this matters beyond the ocean</h2>
-      <div class="two-col">
+<section class="section">
+  <div class="inner">
+    <div class="action-grid">
+      <div class="action-card">
+        <div class="action-icon">📢</div>
+        <div class="action-title">Share this site</div>
+        <div class="action-desc">Most people your age have never heard of deep sea mining. The most powerful thing you can do right now is make sure someone else learns about it.</div>
         <div>
-          <p>The argument for deep sea mining is that we need cobalt, nickel, and manganese to build EV batteries for the green energy transition. This framing deserves scrutiny.</p>
-          <p>Independent researchers point out that <strong>battery technology is rapidly evolving</strong> away from cobalt and toward lithium-iron-phosphate and sodium-ion chemistries — which don't require seabed minerals. Mining the ocean floor to fuel current battery technology may create a problem that the market solves on its own within a decade.</p>
-          <p>Meanwhile, <strong>existing land-based recycling</strong> of critical minerals is dramatically underfunded compared to new extraction. The EU estimates that recycling could meet a significant share of demand for these minerals by 2030 — without touching the ocean floor.</p>
-        </div>
-        <div>
-          <p>There's also the governance question. The ISA was designed to treat the ocean floor as the "common heritage of humankind" — resources belonging to all people, managed for collective benefit. In practice it has functioned as a permitting body for wealthy nations and multinational corporations.</p>
-          <p>The 2025 US executive order bypassing the ISA entirely represents a significant escalation — effectively saying the US will mine regardless of international consensus. <strong>This is the moment to pay attention.</strong></p>
-          <p>Portugal has already passed a law banning deep sea mining in its national waters for 25 years. Germany and Canada have called for moratoria. The science is not on the side of moving fast.</p>
-          <div class="source-note">Sources: CSIS AMTI May 2025; European Parliament; WRI 2024; Congress.gov CRS IG10053</div>
+          <button class="btn btn-primary" onclick="copyLink()" style="font-size:13px;padding:10px 20px">Copy Site Link</button>
+          <span id="copy-ok" style="font-size:13px;color:var(--green);margin-left:10px;display:none">Copied!</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-inner">
-      <div><strong>WHAT LIES BENEATH</strong> — A deep sea mining awareness project</div>
-      <div class="footer-sources">
-        Data sources: International Seabed Authority (isa.org.jm) · Deep Sea Conservation Coalition ·
-        CSIS Asia Maritime Transparency Initiative, May 2025 · World Resources Institute, 2024 ·
-        Congress.gov CRS Report IG10053, Feb 2026 · DOSI Project · IPCC
+      <div class="action-card">
+        <div class="action-icon">✍️</div>
+        <div class="action-title">Sign the moratorium petition</div>
+        <div class="action-desc">The Deep Sea Conservation Coalition is pushing for a global pause on commercial deep sea mining. Their petition has hundreds of thousands of signatures from scientists and citizens worldwide.</div>
+        <a href="https://www.savethehighseas.org" target="_blank">→ savethehighseas.org</a>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">🏛️</div>
+        <div class="action-title">Contact your representatives</div>
+        <div class="action-desc">The US is issuing its own deep sea mining licenses through NOAA. Your representatives in Congress can influence these decisions. Ask them where they stand on Trump's April 2025 executive order.</div>
+        <a href="https://www.congress.gov/members/find-your-member" target="_blank">→ Find your representative</a>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">🔬</div>
+        <div class="action-title">Read the actual science</div>
+        <div class="action-desc">The Deep-Ocean Stewardship Initiative (DOSI) is a network of scientists providing independent research on deep sea mining impacts — not funded by the industry.</div>
+        <a href="https://www.dosi-project.org" target="_blank">→ dosi-project.org</a>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">📰</div>
+        <div class="action-title">Follow the story</div>
+        <div class="action-desc">This is moving fast. The CSIS Asia Maritime Transparency Initiative and Deep Sea Conservation Coalition track developments in real time. Trump's April 2025 EO changed everything.</div>
+        <a href="https://www.deepseaminingoutourdepth.org" target="_blank">→ deepseaminingoutourdepth.org</a>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">🌊</div>
+        <div class="action-title">Support ocean protection orgs</div>
+        <div class="action-desc">Oceans North, the Deep Sea Conservation Coalition, and Avaaz are all actively campaigning against deep sea mining. Every donation and signature counts.</div>
+        <a href="https://www.oceansnorth.org" target="_blank">→ oceansnorth.org</a>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    const questions = [
-      {
-        q: "How many ISA exploration contracts for deep sea mining are currently active?",
-        opts: ["7", "15", "31", "52"],
-        correct: 2,
-        explanation: "The ISA has issued 31 exploration contracts across three ocean basins — 19 for polymetallic nodules, 7 for sulphides, and 5 for cobalt-rich crusts. Source: ISA, isa.org.jm"
-      },
-      {
-        q: "How long does it take for polymetallic nodules to form naturally on the seafloor?",
-        opts: ["100 years", "10,000 years", "1 million years", "10 million years"],
-        correct: 3,
-        explanation: "Polymetallic nodules take approximately 10 million years to form as minerals accrete slowly around a hard nucleus. Mining destroys them permanently in seconds. Source: NOAA"
-      },
-      {
-        q: "What percentage of CO₂ produced by humans is absorbed by the deep ocean?",
-        opts: ["5%", "10%", "30%", "60%"],
-        correct: 2,
-        explanation: "The deep ocean absorbs roughly 30% of all CO₂ humans produce, making it one of Earth's most critical carbon sinks. Disrupting the seafloor threatens this system. Source: IPCC Ocean & Cryosphere Report"
-      },
-      {
-        q: "In April 2025, what major policy change directly affected deep sea mining?",
-        opts: [
-          "The UN banned all deep sea mining",
-          "President Trump signed an executive order fast-tracking US mining permits",
-          "The ISA finally published commercial mining regulations",
-          "Norway became the first country to begin commercial extraction"
-        ],
-        correct: 1,
-        explanation: "President Trump signed an executive order in April 2025 directing NOAA to fast-track deep sea mining permits for US companies — bypassing the international ISA framework. Source: CSIS AMTI, May 2025"
-      },
-      {
-        q: "How many nations called for a moratorium on deep sea mining at the ISA's 29th Assembly in 2024?",
-        opts: ["5", "12", "22", "32"],
-        correct: 3,
-        explanation: "32 nations called for a moratorium or precautionary pause on deep sea mining at the 29th ISA Assembly. The ISA did not comply. Source: ISA 29th Assembly, 2024; Wikipedia — ISA"
-      },
-    ];
+<!-- QUIZ -->
+<section class="section section-alt">
+  <div class="inner">
+    <div class="section-tag">Test Your Knowledge</div>
+    <h2 style="margin-bottom:8px">How much do you know?</h2>
+    <p style="margin-bottom:32px">5 questions — all answers backed by real data cited on this site.</p>
+    <div id="quiz-box">
+      <div id="quiz-q" class="quiz-q"></div>
+      <div id="quiz-opts" class="quiz-opts"></div>
+      <div id="quiz-fb" class="quiz-fb"></div>
+      <button id="quiz-next" onclick="nextQ()">Next Question →</button>
+    </div>
+  </div>
+</section>
 
-    let current = 0, score = 0, answered = false;
+<section class="section">
+  <div class="inner">
+    <div class="section-tag">The Bigger Picture</div>
+    <h2>Why this matters beyond the ocean</h2>
+    <div class="two-col">
+      <div>
+        <p>The argument for deep sea mining is that we need cobalt and nickel for EV batteries to power the green transition. But this framing deserves scrutiny.</p>
+        <p>Battery technology is <strong>rapidly evolving away from cobalt</strong> — toward lithium-iron-phosphate and sodium-ion chemistries that don't need seabed minerals. Mining the ocean for current technology could create permanent damage for a problem the market solves within a decade.</p>
+        <p>Meanwhile, <strong>land-based recycling of critical minerals is dramatically underfunded</strong> compared to new extraction. The EU estimates recycling could meet a significant share of demand by 2030 — without touching the seafloor.</p>
+      </div>
+      <div>
+        <p>The governance question is equally serious. The ISA was designed to treat the ocean as the "common heritage of humankind." In practice it has functioned as a permitting body for wealthy nations and corporations.</p>
+        <p>The 2025 US executive order bypassing the ISA entirely is a significant escalation. Portugal has already passed a law banning deep sea mining in its national waters for 25 years. Germany and Canada have called for moratoria. <strong>The science is not on the side of moving fast.</strong></p>
+        <div class="src-note">Sources: CSIS AMTI, May 2025 · European Parliament · WRI 2024 · Congress.gov CRS IG10053</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function loadQuestion() {
-      answered = false;
-      const q = questions[current];
-      document.getElementById('quiz-q').textContent = (current + 1) + ' / ' + questions.length + '  —  ' + q.q;
-      const opts = document.getElementById('quiz-opts');
-      opts.innerHTML = '';
-      q.opts.forEach(function(opt, i) {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-opt';
-        btn.textContent = opt;
-        btn.onclick = function() { answer(i); };
-        opts.appendChild(btn);
-      });
-      const fb = document.getElementById('quiz-feedback');
-      fb.className = 'quiz-feedback';
-      fb.style.display = 'none';
-      document.getElementById('quiz-next').className = 'quiz-next';
-    }
+<footer>
+  <div class="footer-in">
+    <div>What Lies Beneath — A deep sea mining awareness project</div>
+    <div class="footer-srcs">ISA (isa.org.jm) · Deep Sea Conservation Coalition · CSIS AMTI, May 2025 · WRI, 2024 · Congress.gov CRS IG10053, Feb 2026 · DOSI Project · IPCC</div>
+  </div>
+</footer>
 
-    function answer(idx) {
-      if (answered) return;
-      answered = true;
-      const q = questions[current];
-      const opts = document.querySelectorAll('.quiz-opt');
-      const fb = document.getElementById('quiz-feedback');
-      const next = document.getElementById('quiz-next');
+<script>
+  var qs = [
+    { q: "How many active ISA exploration contracts exist for deep sea mining?", opts: ["7","15","31","52"], c: 2, ex: "The ISA has issued 31 exploration contracts across three ocean basins. Source: ISA, isa.org.jm" },
+    { q: "How long does it take for polymetallic nodules to form naturally?", opts: ["100 years","10,000 years","1 million years","10 million years"], c: 3, ex: "Polymetallic nodules take approximately 10 million years to form. Mining destroys them permanently in seconds. Source: NOAA" },
+    { q: "What percentage of human CO₂ is absorbed by the deep ocean?", opts: ["5%","10%","30%","60%"], c: 2, ex: "The deep ocean absorbs roughly 30% of all CO₂ humans produce. Source: IPCC Ocean & Cryosphere Report" },
+    { q: "What happened in April 2025 that significantly changed the situation?", opts: ["The UN banned all deep sea mining","Trump signed an EO fast-tracking US mining permits","The ISA published final commercial regulations","Norway began commercial extraction"], c: 1, ex: "Trump signed an executive order directing NOAA to fast-track deep sea mining permits — bypassing the ISA. Source: CSIS AMTI, May 2025" },
+    { q: "How many nations called for a moratorium at the ISA's 2024 Assembly?", opts: ["5","12","22","32"], c: 3, ex: "32 nations called for a moratorium at the ISA 29th Assembly. The ISA did not comply. Source: ISA 29th Assembly, 2024" },
+  ];
 
-      opts.forEach(function(btn, i) {
-        if (i === q.correct) btn.classList.add('correct');
-        else if (i === idx)  btn.classList.add('wrong');
-        btn.disabled = true;
-      });
+  var cur = 0, score = 0, done = false;
 
-      if (idx === q.correct) {
-        score++;
-        fb.className = 'quiz-feedback correct-fb show';
-        fb.textContent = '✓ Correct! ' + q.explanation;
-      } else {
-        fb.className = 'quiz-feedback wrong-fb show';
-        fb.textContent = '✗ ' + q.explanation;
-      }
-      fb.style.display = 'block';
+  function loadQ() {
+    done = false;
+    var q = qs[cur];
+    document.getElementById('quiz-q').textContent = (cur+1) + ' / ' + qs.length + '  —  ' + q.q;
+    var opts = document.getElementById('quiz-opts');
+    opts.innerHTML = '';
+    q.opts.forEach(function(o, i) {
+      var b = document.createElement('button');
+      b.className = 'quiz-opt';
+      b.textContent = o;
+      b.onclick = function() { answer(i); };
+      opts.appendChild(b);
+    });
+    var fb = document.getElementById('quiz-fb');
+    fb.className = 'quiz-fb';
+    document.getElementById('quiz-next').className = '';
+  }
 
-      next.textContent = current < questions.length - 1 ? 'NEXT QUESTION →' : 'SEE RESULTS';
-      next.className = 'quiz-next show';
-    }
+  function answer(idx) {
+    if (done) return;
+    done = true;
+    var q = qs[cur];
+    var btns = document.querySelectorAll('.quiz-opt');
+    btns.forEach(function(b, i) {
+      if (i === q.c) b.classList.add('correct');
+      else if (i === idx) b.classList.add('wrong');
+      b.disabled = true;
+    });
+    var fb = document.getElementById('quiz-fb');
+    if (idx === q.c) { score++; fb.className = 'quiz-fb ok show'; fb.textContent = '✓ Correct! ' + q.ex; }
+    else             { fb.className = 'quiz-fb no show'; fb.textContent = '✗ ' + q.ex; }
+    var next = document.getElementById('quiz-next');
+    next.textContent = cur < qs.length - 1 ? 'Next Question →' : 'See Results';
+    next.className = 'show';
+  }
 
-    function nextQuestion() {
-      current++;
-      if (current >= questions.length) {
-        showResults();
-      } else {
-        loadQuestion();
-      }
-    }
+  function nextQ() {
+    cur++;
+    if (cur >= qs.length) {
+      var box = document.getElementById('quiz-box');
+      var msg = score >= 4 ? "You're well-informed. Help others get there too." : score >= 2 ? "Good start. The more you know, the harder this is to ignore." : "That's okay — most people score low the first time. That's why this site exists.";
+      box.innerHTML = '<div id="quiz-score">' + score + ' / ' + qs.length + '</div><p style="color:var(--muted);margin-bottom:20px">' + msg + '</p><a href="action.html" class="btn btn-outline">Take Action →</a>';
+    } else { loadQ(); }
+  }
 
-    function showResults() {
-      const wrap = document.getElementById('quiz-wrap');
-      wrap.innerHTML = '<div id="quiz-score">' + score + ' / ' + questions.length + '</div>' +
-        '<p style="color:var(--text);margin-bottom:16px">' +
-        (score >= 4 ? 'You\'re well-informed. Now help others get there too.' :
-         score >= 2 ? 'Good start. The more you know, the harder this is to ignore.' :
-         'That\'s okay — most people score low the first time. That\'s why this site exists.') +
-        '</p><a href="action.html" class="btn-secondary">TAKE ACTION →</a>';
-    }
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.origin);
+    document.getElementById('copy-ok').style.display = 'inline';
+    setTimeout(function() { document.getElementById('copy-ok').style.display = 'none'; }, 2000);
+  }
 
-    function copyLink() {
-      navigator.clipboard.writeText(window.location.origin + '/index.html');
-      document.getElementById('copy-confirm').style.display = 'inline';
-      setTimeout(function() { document.getElementById('copy-confirm').style.display = 'none'; }, 2000);
-    }
-
-    loadQuestion();
-  </script>
+  loadQ();
+</script>
 
 </body>
 </html>
